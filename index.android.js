@@ -19,10 +19,6 @@ export default class PhenoChat extends Component {
     return (
       <View style={styles.container}>
         <Tabs />
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
       </View>
     );
   }

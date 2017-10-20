@@ -13,19 +13,12 @@ import {
 } from 'react-native';
 
 import { Tabs } from './config/router';
-import MainMenuView from './src/MainMenuView';
-
-import SQLite from 'react-native-sqlite-storage';
 
 export default class PhenoChat extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Tabs />
-        <Text>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
       </View>
     );
   }

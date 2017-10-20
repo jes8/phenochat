@@ -3,18 +3,18 @@ import { Text, View } from 'react-native';
 
 import SQLite from 'react-native-sqlite-storage';
 
-class BrowseScreen extends Component {
+class DiseaseDetailScreen extends Component {
 	static navigationOptions = {
-		title: 'Browse diseases'
+		title: 'Disease details'
 	};
 
 	render() {
 		return (
 		  <View>
-			  <Text>Browse</Text>
+			  <Text>Disease detail</Text>
 		  </View>
 		)
 	}
 };
 
-module.exports = BrowseScreen;
+module.exports = DiseaseDetailScreen;
