@@ -65,6 +65,7 @@ class DescribeScreen extends Component {
 
 		this.onPhenotypeAdd = this._onPhenotypeAdd.bind(this);
 		this.onPhenotypeRemove = this._onPhenotypeRemove.bind(this);
+		this.renderList = this._renderList.bind(this);
 	}
 
 	_onPhenotypeAdd (item) {
@@ -82,9 +83,20 @@ class DescribeScreen extends Component {
 	}
 
 	_renderList ({item, index}) {
-		return({
-
-		})
+		return(
+  		<View style={styles.listItem}>
+  			<Text style={styles.listItemText}>{item.name}</Text>
+		  	<Icon.Button
+		  		name="times"
+		  		backgroundColor="#E53935"
+		  		size={16}
+		  		style={styles.listItemButton}
+		  		onPress={() => this.onPhenotypeRemove(item, index)}
+		  		>
+		  		Remove
+		  	</Icon.Button>
+  		</View>
+		)
 	}
 
 	render() {
@@ -100,7 +112,7 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress= {() => navigate('DescribeSymptoms')}
+				  		onPress={() => navigate('DescribeSymptoms')}
 				  		title="Add symptoms"
 				  		accessibilityLabel="Add individual symptoms"
 				  		/>
@@ -108,7 +120,7 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress= {() => navigate('DescribeDiagnoses')}
+				  		onPress={() => navigate('DescribeDiagnoses')}
 				  		title="Add suspected diagnoses"
 				  		accessibilityLabel="Add suspected diagnoses"
 				  		/>
@@ -123,26 +135,13 @@ class DescribeScreen extends Component {
 			  	<ScrollView style={styles.listContainer}>
 					  <FlatList
 					  	data={this.state.phenotypeList}
-					  	renderItem={({item, index}) =>
-					  		<View style={styles.listItem}>
-					  			<Text style={styles.listItemText}>{item.name}</Text>
-							  	<Icon.Button
-							  		name="times"
-							  		backgroundColor="#E53935"
-							  		size={16}
-							  		style={styles.listItemButton}
-							  		onPress={() => this.onPhenotypeRemove(item, index)}
-							  		>
-							  		Remove
-							  	</Icon.Button>
-					  		</View>
-					  	}
+					  	renderItem={this.renderList}
 					  />
 					</ScrollView>
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress= {() => navigate('Send')}
+				  		onPress={() => navigate('Send')}
 				  		title="Send phenotypes"
 				  		accessibilityLabel="Send selected phenotype description"
 				  		/>
