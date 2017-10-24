@@ -2,20 +2,27 @@ import React, { Component } from 'react';
 import { StyleSheet, Button, Text, View, FlatList, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+// Temporary list
 let dataList = [{key: 'H1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
 					  		{key: 'H2', name: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'},
 					  		{key: 'H3', name: 'cccccccccccccccccccc'},
 					  		{key: 'H4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
 					  		{key: 'H5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
 
+/**
+ * Add item to list as well as sort it by name
+ */
 function addItemToList(list, item) {
+	// Make a copy of the list
+	let newList = list.slice();
+
 	// Add item
-	list.push(item);
+	newList.push(item);
 
 	// Sort alphabetically
-	return list.sort(function(a, b) {
-		var nameA = a.name.toUpperCase();
-		var nameB = b.name.toUpperCase();
+	return newList.sort(function(a, b) {
+		const nameA = a.name.toUpperCase();
+		const nameB = b.name.toUpperCase();
 		if (nameA < nameB) {
 			return -1;
 		}
@@ -23,14 +30,26 @@ function addItemToList(list, item) {
 	});
 }
 
-function removeItemFromList(list, item){
-	// Find item
-	var itemIndex = list.findIndex(function(el){ el == item.name });
+/**
+ * Remove item from lits
+ */
+function removeItemFromList(list, item, itemIndex){
+	// Make a copy of the list
+	let newList = list.slice();
 
-	// Remove item from list
-	return list.splice(itemIndex, 1);
+	// Make sure it's the correct item we're removing
+	let toRemove = list[itemIndex];
+
+	if (newList.length > 0 && toRemove.key === item.key) {
+		newList.splice(itemIndex, 1);
+	}
+
+	return newList;
 }
 
+/**
+ * Screen for describing phenotypes
+ */
 class DescribeScreen extends Component {
 	static navigationOptions = {
 		title: 'Describe phenotypes'
@@ -41,25 +60,31 @@ class DescribeScreen extends Component {
 
 		// Set state
 		this.state = {
-			selected: dataList
+			phenotypeList: dataList
 		};
 
 		this.onPhenotypeAdd = this._onPhenotypeAdd.bind(this);
 		this.onPhenotypeRemove = this._onPhenotypeRemove.bind(this);
 	}
 
-	_onPhenotypeAdd (evt, item) {
-		let newList = addItemToList(this.state.selected, item);
+	_onPhenotypeAdd (item) {
+		let newList = addItemToList(this.state.phenotypeList, item);
 		this.setState({
-			selected: newList
+			phenotypeList: newList
 		});
 	}
 
-	_onPhenotypeRemove (evt, item, index) {
-		let newList = removeItemFromList(this.state.selected, item);
+	_onPhenotypeRemove (item, index) {
+		let newList = removeItemFromList(this.state.phenotypeList, item, index);
 		this.setState({
-			selected: newList
+			phenotypeList: newList
 		});
+	}
+
+	_renderList ({item, index}) {
+		return({
+
+		})
 	}
 
 	render() {
@@ -97,8 +122,8 @@ class DescribeScreen extends Component {
 
 			  	<ScrollView style={styles.listContainer}>
 					  <FlatList
-					  	data={this.state.selected}
-					  	renderItem={({item}) =>
+					  	data={this.state.phenotypeList}
+					  	renderItem={({item, index}) =>
 					  		<View style={styles.listItem}>
 					  			<Text style={styles.listItemText}>{item.name}</Text>
 							  	<Icon.Button
@@ -106,7 +131,7 @@ class DescribeScreen extends Component {
 							  		backgroundColor="#E53935"
 							  		size={16}
 							  		style={styles.listItemButton}
-							  		onPress= {this.onPhenotypeRemove}
+							  		onPress={() => this.onPhenotypeRemove(item, index)}
 							  		>
 							  		Remove
 							  	</Icon.Button>
