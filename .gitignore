@@ -54,3 +54,8 @@ fastlane/screenshots
 
 # React Native
 __tests__/
+
+# DB
+*.sqlite3
+*.sqlite
+
