@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-
-import SQLite from 'react-native-sqlite-storage';
+import {
+	StyleSheet,
+	Text,
+	View
+} from 'react-native';
 
 class BrowseScreen extends Component {
 	static navigationOptions = {
@@ -10,11 +12,21 @@ class BrowseScreen extends Component {
 
 	render() {
 		return (
-		  <View>
-			  <Text>Browse</Text>
-		  </View>
+      <View style={styles.container}>
+      	<Text>
+      		Browse
+      	</Text>
+      </View>
 		)
 	}
 };
+
+const styles = StyleSheet.create({
+  container: {
+		flex: 1,
+    flexDirection: 'column',
+    padding: 16,
+  },
+});
 
 module.exports = BrowseScreen;

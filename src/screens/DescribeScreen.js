@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, Text, View, FlatList, ScrollView } from 'react-native';
+import {
+	StyleSheet,
+	Button,
+	Text,
+	View,
+	FlatList,
+	ScrollView
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import GenericListViewItem from '../shared/GenericListViewItem';
 
 // Temporary list
 let dataList = [{key: 'H1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -84,18 +93,16 @@ class DescribeScreen extends Component {
 
 	_renderList ({item, index}) {
 		return(
-  		<View style={styles.listItem}>
-  			<Text style={styles.listItemText}>{item.name}</Text>
-		  	<Icon.Button
-		  		name="times"
-		  		backgroundColor="#E53935"
-		  		size={16}
-		  		style={styles.listItemButton}
-		  		onPress={() => this.onPhenotypeRemove(item, index)}
-		  		>
-		  		Remove
-		  	</Icon.Button>
-  		</View>
+		  <GenericListViewItem
+		  	button={{
+		  		iconName: 'times',
+		  		color: '#E53935',
+		  		label: 'Remove'
+		  	}}
+		  	data={item}
+		  	dataIndex={index}
+		  	onButtonPress={this.onPhenotypeRemove}
+		  	/>
 		)
 	}
 
@@ -141,9 +148,9 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress={() => navigate('Send')}
-				  		title="Send phenotypes"
-				  		accessibilityLabel="Send selected phenotype description"
+				  		onPress={() => navigate('Email')}
+				  		title="Email phenotypes"
+				  		accessibilityLabel="Email selected phenotype description"
 				  		/>
 				  </View>
 				</View>
@@ -158,16 +165,16 @@ const styles = StyleSheet.create({
 		flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 10,
+    padding: 16,
   },
   optionContainer: {
-  	width: '90%',
+  	width: '100%',
   	paddingBottom: 10,
   	borderBottomWidth: 2,
   	borderBottomColor: '#BDBDBD',
   },
   selectedContainer: {
-  	width: '90%',
+  	width: '100%',
   	paddingTop: 10,
   	flex: 1,
   },
@@ -185,24 +192,6 @@ const styles = StyleSheet.create({
   	marginBottom: 5,
   	backgroundColor: '#FFFFFF',
   },
-  listItem: {
-  	padding: 10,
-    minHeight: 44,
-  	borderBottomWidth: 1,
-  	borderBottomColor: '#E0E0E0',
-  	flexDirection: 'row',
-  	alignItems: 'center',
-  },
-  listItemText: {
-  	flex: 1,
-  	marginRight: 10,
-  },
-  listItemButton: {
-  	paddingLeft: 8,
-  	paddingRight: 8,
-  	paddingTop: 10,
-  	paddingBottom: 10,
-  }
 });
 
 module.exports = DescribeScreen;
