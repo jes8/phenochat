@@ -8,49 +8,11 @@ import {
 	ScrollView,
 	FlatList
 } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
 import { NavigationActions } from 'react-navigation';
 
+import Phenotype from '../models/Phenotype';
 import OmniBox from '../shared/OmniBox';
 import GenericListViewItem from '../shared/GenericListViewItem';
-
-console.log("hello")
-
-// Open DB
-function successDB() {
-	console.log("DB open");
-}
-
-function errorDB(err) {
-	console.log("SQL error: " + error);
-}
-
-// Path based on https://github.com/andpor/react-native-sqlite-storage/issues/184
-var opts = Platform.OS == "ios" ? {name: 'phenochat', location: '~www/phenochat.sqlite3'} :
-                                  {name: 'main', createFromLocation : "~www/phenochat.sqlite3"}
-
-var db = SQLite.openDatabase(opts, successDB, errorDB);
-db.transaction((tx) => {
-  tx.executeSql('SELECT * FROM Diseases', [], (tx, results) => {
-      console.log("Query completed");
-
-      // Get rows with Web SQL Database spec compliance.
-
-      var len = results.rows.length;
-      for (let i = 0; i < len; i++) {
-        let row = results.rows.item(i);
-        console.log(`Disease name: ${row.name}`);
-      }
-
-      // Alternatively, you can use the non-standard raw method.
-
-      /*
-        let rows = results.rows.raw(); // shallow copy of rows Array
-
-        rows.map(row => console.log(`Employee name: ${row.name}, Dept Name: ${row.deptName}`));
-      */
-    });
-});
 
 // Temporary list
 let dataList = [{key: 'D1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -58,6 +20,10 @@ let dataList = [{key: 'D1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaa
 					  		{key: 'D3', name: 'cccccccccccccccccccc'},
 					  		{key: 'D4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
 					  		{key: 'D5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
+
+let hi = new Phenotype;
+hi.autocomplete('ab');
+console.log(hi.phenotypes);
 
 class DescribeDiagnosesScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now
@@ -91,7 +57,7 @@ class DescribeDiagnosesScreen extends Component {
 		navigate('RefineDiagnoses');
 	}
 
-	_renderList ({item, index}) {
+	_renderList({item, index}) {
 		return(
 		  <GenericListViewItem
 		  	button={{

@@ -1,10 +1,10 @@
 import SQLite from 'react-native-sqlite-storage';
 
-class DiseaseModel {
+class Disease {
 	constructor (name, omimId) {
 		this.name = name;
 		this.omimId = omimId;
 	}
 }
 
-module.exports = DiseaseModel;
+module.exports = Disease;
