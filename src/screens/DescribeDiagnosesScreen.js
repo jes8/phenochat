@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-	Platform,
 	StyleSheet,
 	Button,
 	Text,
@@ -10,7 +9,6 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import Phenotype from '../models/Phenotype';
 import OmniBox from '../shared/OmniBox';
 import GenericListViewItem from '../shared/GenericListViewItem';
 
@@ -20,10 +18,6 @@ let dataList = [{key: 'D1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaa
 					  		{key: 'D3', name: 'cccccccccccccccccccc'},
 					  		{key: 'D4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
 					  		{key: 'D5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
-
-let hi = new Phenotype;
-hi.autocomplete('ab');
-console.log(hi.phenotypes);
 
 class DescribeDiagnosesScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now

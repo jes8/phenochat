@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import GenericListViewItem from '../shared/GenericListViewItem';
+import Util from '../shared/Util';
 
 // Temporary list
 let dataList = [{key: 'H1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -17,44 +18,6 @@ let dataList = [{key: 'H1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaa
 					  		{key: 'H3', name: 'cccccccccccccccccccc'},
 					  		{key: 'H4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
 					  		{key: 'H5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
-
-/**
- * Add item to list as well as sort it by name
- */
-function addItemToList(list, item) {
-	// Make a copy of the list
-	let newList = list.slice();
-
-	// Add item
-	newList.push(item);
-
-	// Sort alphabetically
-	return newList.sort(function(a, b) {
-		const nameA = a.name.toUpperCase();
-		const nameB = b.name.toUpperCase();
-		if (nameA < nameB) {
-			return -1;
-		}
-		return 0;
-	});
-}
-
-/**
- * Remove item from lits
- */
-function removeItemFromList(list, item, itemIndex){
-	// Make a copy of the list
-	let newList = list.slice();
-
-	// Make sure it's the correct item we're removing
-	let toRemove = list[itemIndex];
-
-	if (newList.length > 0 && toRemove.key === item.key) {
-		newList.splice(itemIndex, 1);
-	}
-
-	return newList;
-}
 
 /**
  * Screen for describing phenotypes
@@ -78,14 +41,14 @@ class DescribeScreen extends Component {
 	}
 
 	_onPhenotypeAdd (item) {
-		let newList = addItemToList(this.state.phenotypeList, item);
+		let newList = Util.addItemToList(this.state.phenotypeList, item);
 		this.setState({
 			phenotypeList: newList
 		});
 	}
 
 	_onPhenotypeRemove (item, index) {
-		let newList = removeItemFromList(this.state.phenotypeList, item, index);
+		let newList = Util.removeItemFromList(this.state.phenotypeList, item, index);
 		this.setState({
 			phenotypeList: newList
 		});
@@ -119,7 +82,7 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress={() => navigate('DescribeSymptoms')}
+				  		onPress={() => navigate('DescribeSymptoms', {onPhenotypeSelected: this.onPhenotypeAdd})}
 				  		title="Add symptoms"
 				  		accessibilityLabel="Add individual symptoms"
 				  		/>

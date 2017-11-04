@@ -21,10 +21,9 @@ class GenericListViewItem extends Component {
           backgroundColor={this.props.button.color}
           size={16}
           style={styles.listItemButton}
-          onPress={ () =>
+          onPress={() =>
             this.props.onButtonPress(this.props.data, this.props.dataIndex)
-          }
-          >
+          }>
           {this.props.button.label}
         </Icon.Button>
       </View>

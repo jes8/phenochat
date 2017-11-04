@@ -7,17 +7,12 @@ import {
 	ScrollView,
 	FlatList
 } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
 
 import OmniBox from '../shared/OmniBox';
 import GenericListViewItem from '../shared/GenericListViewItem';
+import Util from '../shared/Util';
 
-// Temporary list
-let dataList = [{key: 'H1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
-					  		{key: 'H2', name: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'},
-					  		{key: 'H3', name: 'cccccccccccccccccccc'},
-					  		{key: 'H4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
-					  		{key: 'H5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
+import Phenotype from '../models/Phenotype';
 
 class DescribeSymptomsScreen extends Component {
 	static navigationOptions = ({navigation, screenProps}) => ({
@@ -28,24 +23,40 @@ class DescribeSymptomsScreen extends Component {
 			color={screenProps.tintColor} />
 	});
 
+  // componentWillMount() {
+  //   this.setState({
+  //     queryText: ''
+  //   });
+  // }
+
 	constructor(props) {
 		super(props);
 
 		// Set state
 		this.state = {
-			symptomList: dataList
+			queryText: '',
+			symptomList: []
 		};
 
+		this.onAutocomplete = this._onAutocomplete.bind(this);
+		this.clearText = this._clearText.bind(this);
 		this.renderList = this._renderList.bind(this);
-		this.onPhenotypeAdd = this._onPhenotypeAdd.bind(this);
 	}
 
-	_onPhenotypeAdd(item, index) {
+	_onAutocomplete(res) {
+		this.setState({
+			symptomList: res
+		});
+	}
 
+	_clearText() {
+		this.setState({queryText: ''});
 	}
 
 	_renderList ({item, index}) {
-		return(
+		const { params } = this.props.navigation.state;
+
+		return (
 		  <GenericListViewItem
 		  	button={{
 		  		iconName: 'plus',
@@ -54,22 +65,30 @@ class DescribeSymptomsScreen extends Component {
 		  	}}
 		  	data={item}
 		  	dataIndex={index}
-		  	onButtonPress={this.onPhenotypeAdd}
-		  	/>
+		  	onButtonPress={(item, index) => {
+		  		params.onPhenotypeSelected(item);
+		  		this.clearText();
+		  	}} />
 		)
 	}
+
 	render() {
 		return (
       <View style={styles.container}>
       	<Text>
       		Describe individual symptoms
       	</Text>
-      	<OmniBox />
+      	<OmniBox
+      		newValue={this.state.queryText}
+      		onSearch={(queryText) => {
+			  		this.setState({queryText: queryText});
+      			Phenotype.autocomplete(queryText, this.onAutocomplete)
+      		}} />
       	<ScrollView style={styles.listContainer}>
     		  <FlatList
     		  	data={this.state.symptomList}
     		  	renderItem={this.renderList}
-    		  />
+    		  	keyExtractor={ (item, index) => {return index} } />
     		</ScrollView>
       </View>
 		);

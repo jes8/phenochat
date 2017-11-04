@@ -28,7 +28,7 @@ class OmniBox extends Component {
       newValue: title
     });
 
-    this.props.updateDataList(dataList);
+    this.props.onSearch(title);
   }
 
   _onKeyPress(event){
@@ -39,7 +39,7 @@ class OmniBox extends Component {
       this.setState({
         newValue: ''
       });
-      this.props.updateDataList(dataList);
+      this.props.onSearch(title);
     }
   }
 
@@ -48,7 +48,7 @@ class OmniBox extends Component {
       <TextInput style={styles.searchBox}
         placeholder='Search for disease'
         blurOnSubmit={false}
-        value={this.state.newValue}
+        value={this.props.newValue}
         onKeyPress={this.onKeyPress}
         onChange={this.onChange}>
       </TextInput>
