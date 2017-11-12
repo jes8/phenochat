@@ -23,22 +23,16 @@ class DescribeSymptomsScreen extends Component {
 			color={screenProps.tintColor} />
 	});
 
-  // componentWillMount() {
-  //   this.setState({
-  //     queryText: ''
-  //   });
-  // }
-
 	constructor(props) {
 		super(props);
 
 		// Set state
 		this.state = {
-			queryText: '',
 			symptomList: []
 		};
 
 		this.onAutocomplete = this._onAutocomplete.bind(this);
+		this.setRef = this._setRef.bind(this);
 		this.clearText = this._clearText.bind(this);
 		this.renderList = this._renderList.bind(this);
 	}
@@ -49,9 +43,13 @@ class DescribeSymptomsScreen extends Component {
 		});
 	}
 
-	_clearText() {
-		this.setState({queryText: ''});
+	_setRef(ref) {
+		this._omniBox = ref;
 	}
+
+	_clearText() {
+    this._omniBox.setNativeProps({text: ''});
+  }
 
 	_renderList ({item, index}) {
 		const { params } = this.props.navigation.state;
@@ -67,7 +65,7 @@ class DescribeSymptomsScreen extends Component {
 		  	dataIndex={index}
 		  	onButtonPress={(item, index) => {
 		  		params.onPhenotypeSelected(item);
-		  		this.clearText();
+					this.clearText();
 		  	}} />
 		)
 	}
@@ -79,9 +77,9 @@ class DescribeSymptomsScreen extends Component {
       		Describe individual symptoms
       	</Text>
       	<OmniBox
-      		newValue={this.state.queryText}
+      		setRef={this.setRef}
+      		placeholderText='Search for symptoms'
       		onSearch={(queryText) => {
-			  		this.setState({queryText: queryText});
       			Phenotype.autocomplete(queryText, this.onAutocomplete)
       		}} />
       	<ScrollView style={styles.listContainer}>

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
+// import _ from 'underscore';
+
+// const WAIT_INTERVAL = 300;
 
 /**
  * Search box based on Todo app tutorial
@@ -8,7 +11,9 @@ import { StyleSheet, TextInput } from 'react-native';
 class OmniBox extends Component {
   constructor(props) {
     super(props);
+
     this.onChange = this._onChange.bind(this);
+    // this.onChange =  _.debounce(this._onChange, WAIT_INTERVAL);
     this.onKeyPress = this._onKeyPress.bind(this);
   }
 
@@ -21,9 +26,6 @@ class OmniBox extends Component {
   _onChange(event){
     var title = event.nativeEvent.text;
 
-    // Wrap in timer
-    // TODO call SQlite query wrapper
-
     this.setState({
       newValue: title
     });
@@ -34,21 +36,22 @@ class OmniBox extends Component {
   _onKeyPress(event){
     if (event.nativeEvent.key == 'Enter' && this.state.newValue) {
 
-      // TODO call SQlite query wrapper
-
       this.setState({
         newValue: ''
       });
+
       this.props.onSearch(title);
     }
   }
 
   render() {
     return (
-      <TextInput style={styles.searchBox}
-        placeholder='Search for disease'
+      <TextInput
+        ref={this.props.setRef}
+        style={styles.searchBox}
+        placeholder={this.props.placeholderText}
         blurOnSubmit={false}
-        value={this.props.newValue}
+        value={this.state.newValue}
         onKeyPress={this.onKeyPress}
         onChange={this.onChange}>
       </TextInput>
