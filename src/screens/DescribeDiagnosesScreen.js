@@ -12,12 +12,7 @@ import { NavigationActions } from 'react-navigation';
 import OmniBox from '../shared/OmniBox';
 import GenericListViewItem from '../shared/GenericListViewItem';
 
-// Temporary list
-let dataList = [{key: 'D1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
-					  		{key: 'D2', name: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'},
-					  		{key: 'D3', name: 'cccccccccccccccccccc'},
-					  		{key: 'D4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
-					  		{key: 'D5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
+import Disease from '../models/Disease';
 
 class DescribeDiagnosesScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now
@@ -39,30 +34,49 @@ class DescribeDiagnosesScreen extends Component {
 
 		// Set state
 		this.state = {
-			diseaseList: dataList
+			diseaseList: []
 		};
 
+		this.onSearch = this._onSearch.bind(this);
+		this.onDiagnosisSelect = this._onDiagnosisSelect.bind(this);
+		this.setRef = this._setRef.bind(this);
 		this.renderList = this._renderList.bind(this);
-		this.onDiagnosisAdd = this._onDiagnosisAdd.bind(this);
 	}
 
-	_onDiagnosisAdd(item, index) {
+	_onSearch(queryText) {
+		function _onAutocomplete(res) {
+			this.setState({
+				diseaseList: res
+			})
+		}
+
+		Disease.autocomplete(queryText, _onAutocomplete.bind(this));
+	}
+
+	_onDiagnosisSelect(item, index) {
+		// const { params } = this.props.navigation.state;
+		// params.onPhenotypeSelected(item);
+		this._omniBox.clear();
+
 		const { navigate } = this.props.navigation;
-		navigate('RefineDiagnoses');
+		const { params } = this.props.navigation.state;
+		navigate('RefineSymptoms', {onPhenotypeSelected: params.onPhenotypeSelected});
+	}
+
+	_setRef(component) {
+		this._omniBox = component;
 	}
 
 	_renderList({item, index}) {
 		return(
 		  <GenericListViewItem
-		  	button={{
-		  		iconName: 'plus',
-		  		color: '#009688',
-		  		label: 'Add'
+		  	simpleIcon={{
+		  		iconName: 'chevron-right',
+		  		color: '#5C6BC0'
 		  	}}
 		  	data={item}
 		  	dataIndex={index}
-		  	onButtonPress={this.onDiagnosisAdd}
-		  	/>
+		  	onPressItem={this.onDiagnosisSelect} />
 		)
 	}
 
@@ -72,12 +86,15 @@ class DescribeDiagnosesScreen extends Component {
 		  	<Text>
 		  		Describe suspected diagnoses and select from their key symptoms
 		  	</Text>
-		  	<OmniBox />
+		  	<OmniBox
+      		setRef={this.setRef}
+      		placeholderText='Search for diseases'
+      		onSearch={this.onSearch} />
 		  	<ScrollView style={styles.listContainer}>
 				  <FlatList
 				  	data={this.state.diseaseList}
 				  	renderItem={this.renderList}
-				  />
+    		  	keyExtractor={ (item, index) => {return index} } />
 				</ScrollView>
 		  </View>
 		)

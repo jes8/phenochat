@@ -41,7 +41,12 @@ class DescribeScreen extends Component {
 	}
 
 	_onPhenotypeAdd (item) {
-		let newList = Util.addItemToList(this.state.phenotypeList, item);
+		var newList;
+		if (Array.isArray(item)) {
+			newList = Util.addListToList(this.state.phenotypeList, item);
+		} else {
+			newList = Util.addItemToList(this.state.phenotypeList, item);
+		}
 		this.setState({
 			phenotypeList: newList
 		});
@@ -57,14 +62,14 @@ class DescribeScreen extends Component {
 	_renderList ({item, index}) {
 		return(
 		  <GenericListViewItem
-		  	button={{
+		  	actionBtn={{
 		  		iconName: 'times',
 		  		color: '#E53935',
 		  		label: 'Remove'
 		  	}}
 		  	data={item}
 		  	dataIndex={index}
-		  	onButtonPress={this.onPhenotypeRemove}
+		  	onPressButton={this.onPhenotypeRemove}
 		  	/>
 		)
 	}
@@ -90,7 +95,7 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress={() => navigate('DescribeDiagnoses')}
+				  		onPress={() => navigate('DescribeDiagnosesMain', {onPhenotypeSelected: this.onPhenotypeAdd})}
 				  		title="Add suspected diagnoses"
 				  		accessibilityLabel="Add suspected diagnoses"
 				  		/>

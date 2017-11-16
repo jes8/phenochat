@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-// import _ from 'underscore';
+import _ from 'underscore';
 
-// const WAIT_INTERVAL = 300;
+const WAIT_INTERVAL = 300;
 
 /**
  * Search box based on Todo app tutorial
@@ -12,8 +12,8 @@ class OmniBox extends Component {
   constructor(props) {
     super(props);
 
-    this.onChange = this._onChange.bind(this);
-    // this.onChange =  _.debounce(this._onChange, WAIT_INTERVAL);
+    this.onSearch = _.debounce(this.props.onSearch, WAIT_INTERVAL);
+    this.onChangeText = this._onChangeText.bind(this);
     this.onKeyPress = this._onKeyPress.bind(this);
   }
 
@@ -23,24 +23,21 @@ class OmniBox extends Component {
     });
   }
 
-  _onChange(event){
-    var title = event.nativeEvent.text;
-
+  _onChangeText(text){
     this.setState({
-      newValue: title
+      newValue: text
     });
 
-    this.props.onSearch(title);
+    this.onSearch(text);
   }
 
   _onKeyPress(event){
     if (event.nativeEvent.key == 'Enter' && this.state.newValue) {
-
       this.setState({
         newValue: ''
       });
 
-      this.props.onSearch(title);
+      this.onSearch(text);
     }
   }
 
@@ -53,7 +50,7 @@ class OmniBox extends Component {
         blurOnSubmit={false}
         value={this.state.newValue}
         onKeyPress={this.onKeyPress}
-        onChange={this.onChange}>
+        onChangeText={this.onChangeText}>
       </TextInput>
     );
   }

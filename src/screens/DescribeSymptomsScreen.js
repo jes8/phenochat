@@ -10,7 +10,6 @@ import {
 
 import OmniBox from '../shared/OmniBox';
 import GenericListViewItem from '../shared/GenericListViewItem';
-import Util from '../shared/Util';
 
 import Phenotype from '../models/Phenotype';
 
@@ -31,42 +30,43 @@ class DescribeSymptomsScreen extends Component {
 			symptomList: []
 		};
 
-		this.onAutocomplete = this._onAutocomplete.bind(this);
+		this.onSearch = this._onSearch.bind(this);
+		this.onSymptomAdd = this._onSymptomAdd.bind(this);
 		this.setRef = this._setRef.bind(this);
-		this.clearText = this._clearText.bind(this);
 		this.renderList = this._renderList.bind(this);
 	}
 
-	_onAutocomplete(res) {
-		this.setState({
-			symptomList: res
-		});
+	_onSearch(queryText) {
+		function _onAutocomplete(res) {
+			this.setState({
+				symptomList: res
+			})
+		}
+
+		Phenotype.autocomplete(queryText, _onAutocomplete.bind(this));
 	}
 
-	_setRef(ref) {
-		this._omniBox = ref;
+	_onSymptomAdd(item, index) {
+		const { params } = this.props.navigation.state;
+		params.onPhenotypeSelected(item);
+		this._omniBox.clear();
 	}
 
-	_clearText() {
-    this._omniBox.setNativeProps({text: ''});
-  }
+	_setRef(component) {
+		this._omniBox = component;
+	}
 
 	_renderList ({item, index}) {
-		const { params } = this.props.navigation.state;
-
 		return (
 		  <GenericListViewItem
-		  	button={{
+		  	actionBtn={{
 		  		iconName: 'plus',
 		  		color: '#009688',
 		  		label: 'Add'
 		  	}}
 		  	data={item}
 		  	dataIndex={index}
-		  	onButtonPress={(item, index) => {
-		  		params.onPhenotypeSelected(item);
-					this.clearText();
-		  	}} />
+		  	onPressButton={this.onSymptomAdd} />
 		)
 	}
 
@@ -79,9 +79,7 @@ class DescribeSymptomsScreen extends Component {
       	<OmniBox
       		setRef={this.setRef}
       		placeholderText='Search for symptoms'
-      		onSearch={(queryText) => {
-      			Phenotype.autocomplete(queryText, this.onAutocomplete)
-      		}} />
+      		onSearch={this.onSearch} />
       	<ScrollView style={styles.listContainer}>
     		  <FlatList
     		  	data={this.state.symptomList}

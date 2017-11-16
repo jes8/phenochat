@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import DescribeScreen from '../src/screens/DescribeScreen';
 import DescribeSymptomsScreen from '../src/screens/DescribeSymptomsScreen';
 import DescribeDiagnosesScreen from '../src/screens/DescribeDiagnosesScreen';
-import RefineDiagnosesScreen from '../src/screens/RefineDiagnosesScreen';
+import RefineSymptomsScreen from '../src/screens/RefineSymptomsScreen';
 import SendScreen from '../src/screens/SendScreen';
 import BrowseScreen from '../src/screens/BrowseScreen';
 import DiseaseDetailScreen from '../src/screens/DiseaseDetailScreen';
@@ -42,8 +42,8 @@ export const DescribeDiagnosisStack = DismissableStackNavigator({
   DescribeDiagnosesMain: {
     screen: DescribeDiagnosesScreen,
   },
-  RefineDiagnoses: {
-    screen: RefineDiagnosesScreen,
+  RefineSymptoms: {
+    screen: RefineSymptomsScreen,
   },
 }, {
   headerMode: 'none',
