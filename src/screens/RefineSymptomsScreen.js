@@ -7,7 +7,6 @@ import {
 	ScrollView,
 	FlatList
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import GenericListViewItem from '../shared/GenericListViewItem';
 
@@ -23,15 +22,17 @@ class RefineSymptomsScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now
 	// https://github.com/react-community/react-navigation/issues/686
 	componentDidMount() {
-		console.log(this.props.navigation.state);
-    this.props.navigation.setParams({dismiss: this.props.navigation.dismiss});
+    this.props.navigation.setParams({dismiss: this.props.screenProps.dismiss});
   }
 
 	static navigationOptions = ({navigation, screenProps}) => ({
 		title: 'Select key symptoms',
+		headerLeft: <Button
+			onPress={() => {navigation.goBack()}}
+  		title='Back' />,
 		headerRight: <Button
-			onPress={() => { navigation.state.params.dismiss() }}
-  		title="Close"
+			onPress={() => {navigation.state.params.dismiss()}}
+  		title='Close'
 			color={screenProps.tintColor} />
 	});
 

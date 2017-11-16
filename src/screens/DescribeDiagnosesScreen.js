@@ -7,7 +7,6 @@ import {
 	ScrollView,
 	FlatList
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import OmniBox from '../shared/OmniBox';
 import GenericListViewItem from '../shared/GenericListViewItem';
@@ -18,14 +17,14 @@ class DescribeDiagnosesScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now
 	// https://github.com/react-community/react-navigation/issues/686
   componentDidMount() {
-    this.props.navigation.setParams({dismiss: this.props.navigation.dismiss});
+    this.props.navigation.setParams({dismiss: this.props.screenProps.dismiss});
   }
 
 	static navigationOptions = ({navigation, screenProps}) => ({
 		title: 'Describe diagnoses',
 		headerRight: <Button
-			onPress={() => { navigation.state.params.dismiss() }}
-  		title="Close"
+			onPress={() => {navigation.state.params.dismiss()}}
+  		title='Close'
 			color={screenProps.tintColor} />
 	});
 
@@ -54,13 +53,16 @@ class DescribeDiagnosesScreen extends Component {
 	}
 
 	_onDiagnosisSelect(item, index) {
-		// const { params } = this.props.navigation.state;
-		// params.onPhenotypeSelected(item);
+		// Clear select box
 		this._omniBox.clear();
 
 		const { navigate } = this.props.navigation;
 		const { params } = this.props.navigation.state;
-		navigate('RefineSymptoms', {onPhenotypeSelected: params.onPhenotypeSelected});
+
+		navigate('RefineSymptoms', {
+			selectedDisease: item,
+			onPhenotypeSelected: params.onPhenotypeSelected
+		});
 	}
 
 	_setRef(component) {

@@ -95,7 +95,7 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress={() => navigate('DescribeDiagnosesMain', {onPhenotypeSelected: this.onPhenotypeAdd})}
+				  		onPress={() => navigate('DescribeDiagnoses', {onPhenotypeSelected: this.onPhenotypeAdd})}
 				  		title="Add suspected diagnoses"
 				  		accessibilityLabel="Add suspected diagnoses"
 				  		/>

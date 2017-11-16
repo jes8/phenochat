@@ -22,13 +22,17 @@ export default function DismissableStackNavigator(routes, options) {
 
     render() {
       const { state, goBack } = this.props.navigation;
-      const nav = {
-        ...this.props.navigation,
+
+      // Add dismiss to props
+      const props = {
+        ...this.props.screenProps,
         dismiss: () => goBack(state.key),
       };
+
       return (
         <StackNav
-          navigation={nav}
+          screenProps={props}
+          navigation={this.props.navigation}
         />
       );
     }
@@ -48,8 +52,8 @@ export const DescribeDiagnosisStack = DismissableStackNavigator({
 }, {
   headerMode: 'none',
   navigationOptions: {
-    gesturesEnabled: false,
-  },
+    gesturesEnabled: false
+  }
 });
 
 /**
@@ -70,7 +74,7 @@ export const DescribeOptionsStack = StackNavigator({
   mode: 'modal',
   navigationOptions: {
     gesturesEnabled: false,
-  },
+  }
 });
 
 /**
@@ -116,5 +120,3 @@ export const Tabs = TabNavigator({
     }
   },
 });
-
-
