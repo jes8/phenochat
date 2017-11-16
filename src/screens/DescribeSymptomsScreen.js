@@ -38,9 +38,7 @@ class DescribeSymptomsScreen extends Component {
 
 	_onSearch(queryText) {
 		function _onAutocomplete(res) {
-			this.setState({
-				symptomList: res
-			})
+			this.setState({ symptomList: res });
 		}
 
 		Phenotype.autocomplete(queryText, _onAutocomplete.bind(this));

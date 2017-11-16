@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 /**
@@ -22,7 +27,7 @@ class GenericListViewItem extends Component {
 
     // Toggle selection if selectable option is on
     if (this.props.selectable === true) {
-      this.setState({selected: !this.props.selected});
+      this.setState({ selected: !this.props.selected });
     }
   }
 
@@ -48,7 +53,7 @@ class GenericListViewItem extends Component {
       var iconColor = this.props.simpleIcon.color;
       if (this.props.selectable === true) {
         var selectedColor = this.props.simpleIcon.color;
-        if (this.props.simpleIcon.selectedColor) {
+        if (this.props.simpleIcon.selectedColor !== undefined) {
           selectedColor = this.props.simpleIcon.selectedColor;
         }
         iconColor = this.props.selected ? selectedColor : this.props.simpleIcon.color;

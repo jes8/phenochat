@@ -59,7 +59,25 @@ class DataHelper {
 	 */
 	query(sqlStatement, successCB, errorCB) {
 		this.db.transaction((tx) => {
-			tx.executeSql(sqlStatement, [], successCB, errorCB);
+			tx.executeSql(sqlStatement, [], (tx, results) => {
+				console.log('query success');
+				var res = [];
+
+        // Add row to result
+	      var len = results.rows.length;
+	      for (let i = 0; i < len; i++) {
+	        let row = results.rows.item(i);
+	        res.push(row);
+	      }
+
+	      // Call success callback
+				if(successCB !== undefined) successCB(res);
+			}, (err) => {
+				console.log('query error: ', err);
+
+	      // Call error callback
+	      if(errorCB !== undefined) errorCB();
+			});
 		}, (err) => {
 			console.log('transaction error: ', err);
 		});
@@ -92,29 +110,18 @@ class DataHelper {
 					' WHERE ' + whereQuery + ' ORDER BY name ASC LIMIT 12';
 
 				// Query DB
-				this.query(fullQuery, (tx, results) => {
-		      console.log("Autocomplete completed");
-
-	        // Add row to result
-		      var len = results.rows.length;
-		      for (let i = 0; i < len; i++) {
-		        let row = results.rows.item(i);
-		        result.push(row);
-		      }
+				this.query(fullQuery, (res) => {
+		      result.push(...res);
 		      resolve();
-				}, (err) => {
-					console.log('Autocomplete error:', err);
-					reject();
-				});
+				}, (err) => { reject(); });
 			});
 
 		})).then(() => {
-	    console.log('Autocomplete result: ', result);
-
-	    // Sort result alphabetically
-			if(successCB) successCB(this._alphaSort(result));
+	    // Sort result alphabetically and call success callback
+			if(successCB !== undefined) successCB(this._alphaSort(result));
 		}).catch(() => {
-			if(errorCB) errorCB();
+	    // Call error callback
+			if(errorCB !== undefined) errorCB();
 		});
 	}
 }

@@ -18,24 +18,18 @@ class OmniBox extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      newValue: ''
-    });
+    this.setState({ newValue: '' });
   }
 
   _onChangeText(text){
-    this.setState({
-      newValue: text
-    });
+    this.setState({ newValue: text });
 
     this.onSearch(text);
   }
 
   _onKeyPress(event){
     if (event.nativeEvent.key == 'Enter' && this.state.newValue) {
-      this.setState({
-        newValue: ''
-      });
+      this.setState({ newValue: '' });
 
       this.onSearch(text);
     }

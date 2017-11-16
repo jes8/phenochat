@@ -16,13 +16,28 @@ class Phenotype {
 	}
 
 	/**
-	 * Return list of phenotypes
-	 * @param  {[type]} disName [description]
-	 * @return {[type]}         [description]
+	 * Return list of phenotypes for given disease
+	 * @param  {string} omimId - OMIM id of disease to search
+	 * @param  {successCallback} successCB - must take results as parameters
+	 * @param  {errorCallback} errorCB - must take error as parameter
 	 */
-	assocWithDisease(disName) {
+	static assocWithDisease(omimId, successCB, errorCB) {
+		// Check omim ID
+		let validOmim = /^\d{6}$/;
+		if (validOmim.test(omimId)){
+			// Form a query
+			let query =
+				'SELECT "phenotypes"."hpo_id", "phenotypes"."name" FROM "phenotypes"' +
+				'INNER JOIN "disease_specs" ON "phenotypes"."id" = "disease_specs"."phenotype_id"' +
+				'INNER JOIN "diseases" ON "disease_specs"."disease_id" = "diseases"."id"' +
+				'WHERE "diseases"."omim_id" = "' + omimId + '" ORDER BY "phenotypes"."name" ASC';
 
+			// Run a query
+			let helper = new DataHelper;
+			helper.query(query, successCB, errorCB);
+		}
 	}
+
 }
 
 module.exports = Phenotype;

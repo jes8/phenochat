@@ -12,13 +12,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import GenericListViewItem from '../shared/GenericListViewItem';
 import Util from '../shared/Util';
 
-// Temporary list
-let dataList = [{key: 'H1', name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
-					  		{key: 'H2', name: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'},
-					  		{key: 'H3', name: 'cccccccccccccccccccc'},
-					  		{key: 'H4', name: 'dddddddddddddddddddddddddddddddddddddddd'},
-					  		{key: 'H5', name: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'}];
-
 /**
  * Screen for describing phenotypes
  */
@@ -32,7 +25,7 @@ class DescribeScreen extends Component {
 
 		// Set state
 		this.state = {
-			phenotypeList: dataList
+			phenotypeList: []
 		};
 
 		this.onPhenotypeAdd = this._onPhenotypeAdd.bind(this);
@@ -43,9 +36,13 @@ class DescribeScreen extends Component {
 	_onPhenotypeAdd (item) {
 		var newList;
 		if (Array.isArray(item)) {
-			newList = Util.addListToList(this.state.phenotypeList, item);
+			newList = Util.addListToList(
+				this.state.phenotypeList, item, (item) => item.hpo_id
+			);
 		} else {
-			newList = Util.addItemToList(this.state.phenotypeList, item);
+			newList = Util.addItemToList(
+				this.state.phenotypeList, item, (item) => item.hpo_id
+			);
 		}
 		this.setState({
 			phenotypeList: newList
@@ -53,10 +50,11 @@ class DescribeScreen extends Component {
 	}
 
 	_onPhenotypeRemove (item, index) {
-		let newList = Util.removeItemFromList(this.state.phenotypeList, item, index);
-		this.setState({
-			phenotypeList: newList
-		});
+		let newList = Util.removeItemFromList(
+			this.state.phenotypeList, item, index, (item) => item.hpo_id
+		);
+
+		this.setState({ phenotypeList: newList });
 	}
 
 	_renderList ({item, index}) {
@@ -69,8 +67,7 @@ class DescribeScreen extends Component {
 		  	}}
 		  	data={item}
 		  	dataIndex={index}
-		  	onPressButton={this.onPhenotypeRemove}
-		  	/>
+		  	onPressButton={this.onPhenotypeRemove} />
 		)
 	}
 
@@ -87,18 +84,20 @@ class DescribeScreen extends Component {
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress={() => navigate('DescribeSymptoms', {onPhenotypeSelected: this.onPhenotypeAdd})}
-				  		title="Add symptoms"
-				  		accessibilityLabel="Add individual symptoms"
-				  		/>
+				  		onPress={() => navigate(
+				  			'DescribeSymptoms', {onPhenotypeSelected: this.onPhenotypeAdd}
+				  		)}
+				  		title='Add symptoms'
+				  		accessibilityLabel='Add individual symptoms' />
 				  </View>
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
-				  		onPress={() => navigate('DescribeDiagnoses', {onPhenotypeSelected: this.onPhenotypeAdd})}
-				  		title="Add suspected diagnoses"
-				  		accessibilityLabel="Add suspected diagnoses"
-				  		/>
+				  		onPress={() => navigate(
+				  			'DescribeDiagnoses', {onPhenotypeSelected: this.onPhenotypeAdd}
+				  		)}
+				  		title='Add suspected diagnoses'
+				  		accessibilityLabel='Add suspected diagnoses' />
 				  </View>
 			  </View>
 
@@ -111,15 +110,14 @@ class DescribeScreen extends Component {
 					  <FlatList
 					  	data={this.state.phenotypeList}
 					  	renderItem={this.renderList}
-					  />
+    		  		keyExtractor={ (item, index) => {return item.hpo_id} } />
 					</ScrollView>
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
 				  		onPress={() => navigate('Email')}
-				  		title="Email phenotypes"
-				  		accessibilityLabel="Email selected phenotype description"
-				  		/>
+				  		title='Email phenotypes'
+				  		accessibilityLabel='Email selected phenotype description' />
 				  </View>
 				</View>
 

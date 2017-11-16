@@ -44,9 +44,7 @@ class DescribeDiagnosesScreen extends Component {
 
 	_onSearch(queryText) {
 		function _onAutocomplete(res) {
-			this.setState({
-				diseaseList: res
-			})
+			this.setState({ diseaseList: res });
 		}
 
 		Disease.autocomplete(queryText, _onAutocomplete.bind(this));
