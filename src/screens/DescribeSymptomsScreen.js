@@ -18,40 +18,69 @@ class DescribeSymptomsScreen extends Component {
 		title: 'Describe symptoms',
 		headerRight: <Button
 			onPress= {() => navigation.goBack()}
-  		title="Close"
+  		title='Close'
 			color={screenProps.tintColor} />
 	});
 
 	constructor(props) {
 		super(props);
 
-		// Set state
 		this.state = {
-			symptomList: []
+			symptomList: [],
+			added: {}
 		};
 
 		this.onSearch = this._onSearch.bind(this);
 		this.onSymptomAdd = this._onSymptomAdd.bind(this);
-		this.setRef = this._setRef.bind(this);
+		this.setOmniBoxRef = this._setOmniBoxRef.bind(this);
+		this.setScrollViewRef = this._setScrollViewRef.bind(this);
 		this.renderList = this._renderList.bind(this);
 	}
 
 	_onSearch(queryText) {
 		function _onAutocomplete(res) {
-			this.setState({ symptomList: res });
+			let newList = res.map(function(item) {
+				item.added = false;
+				return item;
+			});
+
+			this.setState({ symptomList: newList });
+			this._scrollView.scrollTo({x: 0, y: 0, animated: false});
 		}
 
-		Phenotype.autocomplete(queryText, _onAutocomplete.bind(this));
+		Phenotype.autocomplete(queryText, _onAutocomplete.bind(this),
+			undefined, Object.keys(this.state.added));
 	}
 
 	_onSymptomAdd(item, index) {
-		const { params } = this.props.navigation.state;
-		params.onPhenotypeSelected(item);
-		this._omniBox.clear();
+		if (item.added === false) {
+			// Update local list
+			let newList = this.state.symptomList.slice();
+			newList.splice(index, 1);
+
+			let newlyAdded = {...this.state.added};
+			newlyAdded[item.hpo_id] = true;
+
+			this.setState({
+				symptomList: newList,
+				added: newlyAdded
+			})
+
+			// Add to overall list
+			const { params } = this.props.navigation.state;
+			params.onPhenotypeSelected(item);
+
+			// Clear search box
+			this._omniBox.clear();
+		}
 	}
 
-	_setRef(component) {
+	_setOmniBoxRef(component) {
 		this._omniBox = component;
+	}
+
+	_setScrollViewRef(component) {
+		this._scrollView = component;
 	}
 
 	_renderList ({item, index}) {
@@ -60,7 +89,7 @@ class DescribeSymptomsScreen extends Component {
 		  	actionBtn={{
 		  		iconName: 'plus',
 		  		color: '#009688',
-		  		label: 'Add'
+		  		label: 'Add',
 		  	}}
 		  	data={item}
 		  	dataIndex={index}
@@ -75,10 +104,12 @@ class DescribeSymptomsScreen extends Component {
       		Describe individual symptoms
       	</Text>
       	<OmniBox
-      		setRef={this.setRef}
+      		setRef={this.setOmniBoxRef}
       		placeholderText='Search for symptoms'
       		onSearch={this.onSearch} />
-      	<ScrollView style={styles.listContainer}>
+      	<ScrollView
+      		style={styles.listContainer}
+      		ref={this.setScrollViewRef}>
     		  <FlatList
     		  	data={this.state.symptomList}
     		  	renderItem={this.renderList}

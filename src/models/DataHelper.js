@@ -85,29 +85,30 @@ class DataHelper {
 
 	/**
 	 * Make an autocomplete query to sqlite db
-	 * @param  {string[]} tablesToQuery - name of tables to query
-	 * @param  {string} colNames - names of columns to grab
-	 * @param  {string} queryText - name to make an autocomplete request
+	 * @param  {Object} queryProps - query properties (tables: name of tables to query; colNames: names of columns to grab; queryText: name to make an autocomplete request)
 	 * @param  {successCallback} successCB - must take tx and results as parameters
 	 * @param  {errorCallback} errorCB - must take error as parameter
 	 */
-	autocomplete(tablesToQuery, colNames, queryText, successCB, errorCB) {
+	autocomplete(queryProps, successCB, errorCB) {
 		var result = [];
 
 		// Run multiple queries
 		// https://github.com/andpor/react-native-sqlite-storage/issues/166
-		Promise.all(tablesToQuery.map((tableName, index) => {
+		Promise.all(queryProps.tables.map((tableName, index) => {
 			// Wrap in promise so that call back doesn't execute right away
 			return new Promise ((resolve, reject) => {
 				// Assemble where query
 				// https://stackoverflow.com/questions/15480319/case-sensitive-and-insensitive-like-in-sqlite
 				let whereQuery =
-					'UPPER(name) like \'%' + queryText.toUpperCase() + '%\'';
+					'UPPER(name) like \'%' + queryProps.queryText.toUpperCase() + '%\'';
+
+				// Assemble exclude query if provided
+				let excludeQuery = queryProps.excludeQuery || '';
 
 				// Assemble full query
 				let fullQuery =
-					'SELECT ' + colNames + ' FROM ' + tableName +
-					' WHERE ' + whereQuery + ' ORDER BY name ASC LIMIT 12';
+					'SELECT ' + queryProps.colNames + ' FROM ' + tableName +
+					' WHERE ' + whereQuery + excludeQuery + ' ORDER BY name ASC LIMIT 12';
 
 				// Query DB
 				this.query(fullQuery, (res) => {

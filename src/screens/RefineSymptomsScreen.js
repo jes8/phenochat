@@ -110,12 +110,13 @@ class RefineSymptomsScreen extends Component {
 	}
 
 	_renderList ({item, index}) {
-		return(
+		return (
 		  <GenericListViewItem
 		  	simpleIcon={{
-		  		iconName: 'check',
+		  		iconName: 'check-circle-o',
+		  		iconSize: 24,
 		  		color: '#B0BEC5',
-		  		selectedColor: '#5C6BC0'
+		  		selectedColor: '#FFA726'
 		  	}}
 		  	data={item}
 		  	dataIndex={index}

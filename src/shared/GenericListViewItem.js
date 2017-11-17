@@ -38,31 +38,47 @@ class GenericListViewItem extends Component {
   render() {
     var actionBtn = null;
     if (this.props.actionBtn !== undefined) {
+      let baseColor = this.props.actionBtn.color || '#42A5F5';
+      let baseLabel = this.props.actionBtn.label;
+
+      var btnColor, btnLabel;
+      if (this.props.selectable === true) {
+        let selectedColor = this.props.actionBtn.selectedColor || '#78909C';
+        btnColor = this.props.selected ? selectedColor : baseColor;
+
+        let selectedLabel = this.props.actionBtn.selectedLabel || baseLabel;
+        btnLabel = this.props.selected ? selectedLabel : baseLabel;
+      } else {
+        btnColor = baseColor;
+        btnLabel = baseLabel;
+      }
+
       actionBtn = <Icon.Button
-          name={this.props.actionBtn.iconName}
-          backgroundColor={this.props.actionBtn.color}
-          size={16}
+          name={this.props.actionBtn.iconName || 'check'}
+          backgroundColor={btnColor}
+          size={this.props.actionBtn.iconSize || 16}
           style={styles.listItemButton}
           onPress={this.onPressButton}>
-          {this.props.actionBtn.label}
+          {btnLabel}
         </Icon.Button>;
     }
 
     var simpleIcon = null;
     if (this.props.simpleIcon !== undefined) {
-      var iconColor = this.props.simpleIcon.color;
+      let baseColor = this.props.simpleIcon.color || '#78909C';
+
+      var iconColor;
       if (this.props.selectable === true) {
-        var selectedColor = this.props.simpleIcon.color;
-        if (this.props.simpleIcon.selectedColor !== undefined) {
-          selectedColor = this.props.simpleIcon.selectedColor;
-        }
-        iconColor = this.props.selected ? selectedColor : this.props.simpleIcon.color;
+        let selectedColor = this.props.simpleIcon.selectedColor || '#AB47BC';
+        iconColor = this.props.selected ? selectedColor : baseColor;
+      } else {
+        iconColor = baseColor;
       }
 
       simpleIcon = <Icon
-        name={this.props.simpleIcon.iconName}
+        name={this.props.simpleIcon.iconName || 'chevron-right'}
         color={iconColor}
-        size={16}
+        size={this.props.simpleIcon.iconSize || 16}
         style={styles.listItemButton} />;
     }
 
@@ -109,7 +125,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 10,
     paddingBottom: 10,
-  },
+  }
 });
 
 module.exports = GenericListViewItem;

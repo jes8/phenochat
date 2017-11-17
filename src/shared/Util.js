@@ -21,14 +21,7 @@ class Util {
 		newList = _.uniq(newList, false, function(el){ return keyAccessor(el) });
 
 		// Sort alphabetically
-		return newList.sort(function(a, b) {
-			const nameA = a.name.toUpperCase();
-			const nameB = b.name.toUpperCase();
-			if (nameA < nameB) {
-				return -1;
-			}
-			return 0;
-		});
+		return _.sortBy(newList, 'name');
 	}
 
 	/**
@@ -48,14 +41,7 @@ class Util {
 		}
 
 		// Sort alphabetically
-		return newList.sort(function(a, b) {
-			const nameA = a.name.toUpperCase();
-			const nameB = b.name.toUpperCase();
-			if (nameA < nameB) {
-				return -1;
-			}
-			return 0;
-		});
+		return _.sortBy(newList, 'name');
 	}
 
 	/**

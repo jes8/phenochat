@@ -6,13 +6,25 @@ class Phenotype {
 	 * @param  {string} phenoName - phenotype name to make an autocomplete request
 	 * @param  {successCallback} successCB - must take results as parameters
 	 * @param  {errorCallback} errorCB - must take error as parameter
+	 * @param  {string[]} excludeHpoIds - (Optional) hpo ids to exclude
 	 */
-	static autocomplete(phenoName, successCB, errorCB) {
+	static autocomplete(phenoName, successCB, errorCB, excludeHpoIds) {
+		// If exclude ids are provided, construct exclude query
+		let excludeQuery;
+		if (excludeHpoIds !== undefined && excludeHpoIds.length > 0) {
+			let excludeIds = excludeHpoIds.map((item) => "'" + item + "'");
+			excludeQuery = 'AND hpo_id NOT IN (' + excludeIds.join(', ') + ') ';
+		}
+
 		let helper = new DataHelper;
 		helper.autocomplete(
-			['phenotypes', 'phenotype_synonyms'],
-			'hpo_id, name',
-			phenoName, successCB, errorCB);
+			{
+				tables: ['phenotypes', 'phenotype_synonyms'],
+				colNames: 'hpo_id, name',
+				queryText: phenoName,
+				excludeQuery: excludeQuery
+			}, successCB, errorCB
+		);
 	}
 
 	/**

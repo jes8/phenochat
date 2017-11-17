@@ -38,13 +38,15 @@ class DescribeDiagnosesScreen extends Component {
 
 		this.onSearch = this._onSearch.bind(this);
 		this.onDiagnosisSelect = this._onDiagnosisSelect.bind(this);
-		this.setRef = this._setRef.bind(this);
+		this.setOmniBoxRef = this._setOmniBoxRef.bind(this);
+		this.setScrollViewRef = this._setScrollViewRef.bind(this);
 		this.renderList = this._renderList.bind(this);
 	}
 
 	_onSearch(queryText) {
 		function _onAutocomplete(res) {
 			this.setState({ diseaseList: res });
+			this._scrollView.scrollTo({x: 0, y: 0, animated: false});
 		}
 
 		Disease.autocomplete(queryText, _onAutocomplete.bind(this));
@@ -63,8 +65,12 @@ class DescribeDiagnosesScreen extends Component {
 		});
 	}
 
-	_setRef(component) {
+	_setOmniBoxRef(component) {
 		this._omniBox = component;
+	}
+
+	_setScrollViewRef(component) {
+		this._scrollView = component;
 	}
 
 	_renderList({item, index}) {
@@ -87,10 +93,12 @@ class DescribeDiagnosesScreen extends Component {
 		  		Describe suspected diagnoses and select from their key symptoms
 		  	</Text>
 		  	<OmniBox
-      		setRef={this.setRef}
+      		setRef={this.setOmniBoxRef}
       		placeholderText='Search for diseases'
       		onSearch={this.onSearch} />
-		  	<ScrollView style={styles.listContainer}>
+		  	<ScrollView
+		  		style={styles.listContainer}
+      		ref={this.setScrollViewRef}>
 				  <FlatList
 				  	data={this.state.diseaseList}
 				  	renderItem={this.renderList}

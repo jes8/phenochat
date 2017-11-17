@@ -10,9 +10,12 @@ class Disease {
 	static autocomplete(disName, successCB, errorCB) {
 		let helper = new DataHelper;
 		helper.autocomplete(
-			['diseases', 'disease_synonyms'],
-			'omim_id, name',
-			disName, successCB, errorCB);
+			{
+				tables: ['diseases', 'disease_synonyms'],
+				colNames: 'omim_id, name',
+				queryText: disName
+			}, successCB, errorCB
+		);
 	}
 
 }
