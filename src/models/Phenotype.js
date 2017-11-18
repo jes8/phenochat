@@ -40,9 +40,9 @@ class Phenotype {
 			// Form a query
 			let query =
 				'SELECT "phenotypes"."hpo_id", "phenotypes"."name" FROM "phenotypes"' +
-				'INNER JOIN "disease_specs" ON "phenotypes"."id" = "disease_specs"."phenotype_id"' +
-				'INNER JOIN "diseases" ON "disease_specs"."disease_id" = "diseases"."id"' +
-				'WHERE "diseases"."omim_id" = "' + omimId + '" ORDER BY "phenotypes"."name" ASC';
+				' INNER JOIN "disease_specs" ON "phenotypes"."id" = "disease_specs"."phenotype_id"' +
+				' INNER JOIN "diseases" ON "disease_specs"."disease_id" = "diseases"."id"' +
+				' WHERE "diseases"."omim_id" = "' + omimId + '" ORDER BY "phenotypes"."name" ASC';
 
 			// Run a query
 			let helper = new DataHelper;

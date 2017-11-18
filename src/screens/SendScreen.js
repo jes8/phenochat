@@ -8,7 +8,6 @@ import {
 	Alert,
 	Linking,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 class SendScreen extends Component {
 	static navigationOptions = {
@@ -73,7 +72,7 @@ class SendScreen extends Component {
 		  if (!supported) {
 				errorHandler();
 		  } else {
-		    return Linking.openURL(url).catch(errorHandler);
+		    Linking.openURL(url).catch(errorHandler);
 		  }
 		}).catch(errorHandler);
 	}

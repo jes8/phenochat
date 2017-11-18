@@ -20,7 +20,7 @@ class RefineSymptomsScreen extends Component {
     this.props.navigation.setParams({dismiss: this.props.screenProps.dismiss});
   }
 
-	static navigationOptions = ({navigation, screenProps}) => ({
+	static navigationOptions = ({navigation}) => ({
 		title: 'Select key symptoms',
 		headerLeft: <Button
 			onPress={() => {navigation.goBack()}}
