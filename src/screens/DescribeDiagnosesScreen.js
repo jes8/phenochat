@@ -53,15 +53,19 @@ class DescribeDiagnosesScreen extends Component {
 	}
 
 	_onDiagnosisSelect(item, index) {
-		// Clear select box
+		// Clear search box
 		this._omniBox.clear();
 
 		const { navigate } = this.props.navigation;
 		const { params } = this.props.navigation.state;
 
+		// Record suspected diagnosis
+		params.onDiseaseSelect(item);
+
+		// Navigate to next screen
 		navigate('RefineSymptoms', {
 			selectedDisease: item,
-			onPhenotypeSelected: params.onPhenotypeSelected
+			onPhenotypeSelect: params.onPhenotypeSelect
 		});
 	}
 

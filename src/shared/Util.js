@@ -52,7 +52,7 @@ class Util {
 	 */
 	static removeItemFromList(
 		list, item, itemIndex, keyAccessor = (item) => item.key
-	){
+	) {
 		// Make a copy of the list
 		let newList = list.slice();
 

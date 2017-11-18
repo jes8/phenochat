@@ -101,7 +101,7 @@ class RefineSymptomsScreen extends Component {
 		} else {
 			// Add to phenotype list
 			const { params } = this.props.navigation.state;
-			params.onPhenotypeSelected(selectedSymptoms);
+			params.onPhenotypeSelect(selectedSymptoms);
 
 			// Dismiss modal
 			this.props.screenProps.dismiss();
@@ -109,7 +109,7 @@ class RefineSymptomsScreen extends Component {
 
 	}
 
-	_renderList ({item, index}) {
+	_renderList({item, index}) {
 		return (
 		  <GenericListViewItem
 		  	simpleIcon={{

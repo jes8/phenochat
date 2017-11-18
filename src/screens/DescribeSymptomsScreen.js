@@ -68,7 +68,7 @@ class DescribeSymptomsScreen extends Component {
 
 			// Add to overall list
 			const { params } = this.props.navigation.state;
-			params.onPhenotypeSelected(item);
+			params.onPhenotypeSelect(item);
 
 			// Clear search box
 			this._omniBox.clear();
@@ -83,7 +83,7 @@ class DescribeSymptomsScreen extends Component {
 		this._scrollView = component;
 	}
 
-	_renderList ({item, index}) {
+	_renderList({item, index}) {
 		return (
 		  <GenericListViewItem
 		  	actionBtn={{
