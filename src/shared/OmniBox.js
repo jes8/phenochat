@@ -40,11 +40,12 @@ class OmniBox extends Component {
       <TextInput
         ref={this.props.setRef}
         style={styles.searchBox}
+        autoCorrect={false}
         placeholder={this.props.placeholderText}
-        blurOnSubmit={false}
         value={this.state.newValue}
         onKeyPress={this.onKeyPress}
-        onChangeText={this.onChangeText}>
+        onChangeText={this.onChangeText}
+        underlineColorAndroid='transparent'>
       </TextInput>
     );
   }
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 1,
     borderColor: '#EEE',
-    borderRadius: 8,
+    borderRadius: 4,
     backgroundColor: '#FFF'
   },
 });

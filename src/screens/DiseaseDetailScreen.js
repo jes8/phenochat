@@ -18,10 +18,7 @@ import Phenotype from '../models/Phenotype';
 
 class DiseaseDetailScreen extends Component {
 	static navigationOptions = ({navigation}) => ({
-		title: 'Disease information',
-		headerLeft: <Button
-			onPress={() => {navigation.goBack()}}
-  		title='Back' />
+		title: 'Disease information'
 	});
 
 	constructor(props) {

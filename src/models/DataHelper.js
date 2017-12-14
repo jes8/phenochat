@@ -39,6 +39,7 @@ class DataHelper {
 	/**
 	 * Alphabetically sort array
 	 * @param  {[]} array - any array
+	 * @return {[]} alphabetically sorted array
 	 */
 	_alphaSort(array) {
 		return array.sort((a, b) => {
@@ -50,6 +51,38 @@ class DataHelper {
     	return 0;
     });
 	}
+
+  /**
+   * Return where in str that query starts
+	 * @param  {String} query - query text to search for
+	 * @param  {String} str - any string
+	 * @return {Number} index of where query starts in str
+   */
+  _startsWith(query, str) {
+    // Escape special characters; $& means the whole matched string
+    const newQuery = query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const queryRe = new RegExp('\\b' + newQuery + '\\b', 'i');
+    const res = queryRe.exec(str);
+    return res !== null ? res.index : Number.MAX_VALUE;
+  };
+
+	/**
+	 * Sort by where the query starts in the string
+	 * @param  {[]} query - query text to fuzzy sort by
+	 * @param  {[]} array - any array
+	 * @return {[]} start sorted array
+	 */
+  _startSort(query, array) {
+  	let startsWith = this._startsWith;
+		return array.sort((a, b) => {
+    	var nameA = startsWith(query, a.name);
+    	var nameB = startsWith(query, b.name);
+
+    	if (nameA < nameB) return -1;
+    	if (nameA > nameB) return 1;
+    	return 0;
+    });
+  }
 
 	/**
 	 * Query sqlite db
@@ -119,7 +152,11 @@ class DataHelper {
 
 		})).then(() => {
 	    // Sort result alphabetically and call success callback
-			if(successCB !== undefined) successCB(this._alphaSort(result));
+			// if(successCB !== undefined) successCB(this._alphaSort(result));
+
+			// Fuzzy sort results and call success callback
+			if(successCB !== undefined)
+				successCB(this._startSort(queryProps.queryText, result));
 		}).catch(() => {
 	    // Call error callback
 			if(errorCB !== undefined) errorCB();
