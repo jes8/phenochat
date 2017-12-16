@@ -5,7 +5,8 @@ import {
 	Text,
 	View,
 	ScrollView,
-	FlatList
+	FlatList,
+	Platform
 } from 'react-native';
 
 import OmniBox from '../shared/OmniBox';
@@ -25,7 +26,8 @@ class DescribeDiagnosesScreen extends Component {
 		headerRight: <Button
 			onPress={() => {navigation.state.params.dismiss()}}
   		title='Close'
-			color={screenProps.tintColor} />
+			color={screenProps.tintColor} />,
+		headerStyle: styles.header
 	});
 
 	constructor(props) {
@@ -126,6 +128,10 @@ const styles = StyleSheet.create({
   	marginBottom: 5,
   	backgroundColor: '#FFFFFF',
   },
+  header: {
+    paddingRight: (Platform.OS === 'android' ? 5 : 0),
+    paddingLeft: (Platform.OS === 'android' ? 5 : 0)
+  }
 });
 
 module.exports = DescribeDiagnosesScreen;

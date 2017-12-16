@@ -18,7 +18,7 @@ import Phenotype from '../models/Phenotype';
 
 class DiseaseDetailScreen extends Component {
 	static navigationOptions = ({navigation}) => ({
-		title: 'Disease information'
+		title: 'Disease information',
 	});
 
 	constructor(props) {

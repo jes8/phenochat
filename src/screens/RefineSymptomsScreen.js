@@ -6,7 +6,8 @@ import {
 	View,
 	ScrollView,
 	FlatList,
-	Alert
+	Alert,
+	Platform
 } from 'react-native';
 
 import GenericListViewItem from '../shared/GenericListViewItem';
@@ -27,7 +28,8 @@ class RefineSymptomsScreen extends Component {
   		title='Back' />,
 		headerRight: <Button
 			onPress={() => {navigation.state.params.dismiss()}}
-  		title='Close' />
+  		title='Close' />,
+		headerStyle: styles.header
 	});
 
 	constructor(props) {
@@ -129,7 +131,7 @@ class RefineSymptomsScreen extends Component {
 	render() {
 		return (
 		  <View style={styles.container}>
-		  	<Text>
+		  	<Text style={styles.instruction}>
 		  		Below are key symptoms of suspected diagnosis.
 		  		Select matching symptoms from the list.
 		  		Press the "Add selected symptoms" button upon
@@ -162,6 +164,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 16,
   },
+  instruction: {
+  	marginBottom: 10,
+  },
   listContainer: {
   	width: '100%',
   	flex: 1,
@@ -174,6 +179,10 @@ const styles = StyleSheet.create({
   	marginBottom: 5,
   	backgroundColor: '#FFFFFF',
   },
+  header: {
+    paddingRight: (Platform.OS === 'android' ? 5 : 0),
+    paddingLeft: (Platform.OS === 'android' ? 5 : 0)
+  }
 });
 
 module.exports = RefineSymptomsScreen;
