@@ -7,6 +7,7 @@ import {
 	ScrollView,
 	FlatList,
 	Alert,
+	ActivityIndicator,
 	Platform
 } from 'react-native';
 
@@ -27,10 +28,10 @@ class RefineSymptomsScreen extends Component {
 	static navigationOptions = ({navigation}) => ({
 		title: 'Select key symptoms',
 		headerLeft: <Button
-			onPress={() => {navigation.goBack()}}
+			onPress={() => { navigation.goBack(); }}
   		title='Back' />,
 		headerRight: <Button
-			onPress={() => {navigation.state.params.dismiss()}}
+			onPress={() => { navigation.state.params.dismiss(); }}
   		title='Close' />,
 		headerStyle: styles.header
 	});
@@ -38,8 +39,14 @@ class RefineSymptomsScreen extends Component {
 	constructor(props) {
 		super(props);
 
+		// Set state
+		this.state = {
+			symptomList: [],
+			selectAll: false,
+		};
+
 		this.onSymptomToggleSelect = this._onSymptomToggleSelect.bind(this);
-		this.onSymptomsSelectAll = this._onSymptomsSelectAll.bind(this);
+		this.onSymptomsToggleAll = this._onSymptomsToggleAll.bind(this);
 		this.onSymptomsAdd = this._onSymptomsAdd.bind(this);
 		this.renderList = this._renderList.bind(this);
 	}
@@ -52,9 +59,9 @@ class RefineSymptomsScreen extends Component {
 		const { params } = this.props.navigation.state;
 
 		function _onSuccess(res) {
-			let newList = res.map(function(item){
-					item.selected = false;
-					return item;
+			let newList = res.map(function(item) {
+				item.selected = false;
+				return item;
 			});
 
 			this.setState({ symptomList: newList });
@@ -67,25 +74,24 @@ class RefineSymptomsScreen extends Component {
 
 	_onSymptomToggleSelect(item, index) {
 		// Toggle selected flag
-		let newList = this.state.symptomList.slice();
-
-		// If item is selcted deselect item
-		if (item.selected === true) {
-			newList[index].selected = false;
-		} else {
-			newList[index].selected = true;
-		}
+		let newList = this.state.symptomList.slice(0);
+		newList[index].selected = !item.selected;
 
 		this.setState({ symptomList: newList });
 	}
 
-	_onSymptomsSelectAll() {
+	_onSymptomsToggleAll() {
+		const selectAll = this.state.selectAll;
+
 		let newList = this.state.symptomList.map(function(item) {
-			item.selected = true;
+			item.selected = !selectAll;
 			return item;
 		});
 
-		this.setState({ symptomList: newList });
+		this.setState({
+			symptomList: newList,
+			selectAll: !selectAll
+		});
 	}
 
 	_onSymptomsAdd() {
@@ -104,8 +110,12 @@ class RefineSymptomsScreen extends Component {
 				{cancelable: false}
 			)
 		} else {
-			// Add to phenotype list
 			const { params } = this.props.navigation.state;
+
+			// Record suspected diagnosis
+			params.onDiseaseSelect(params.selectedDisease);
+
+			// Add to phenotype list
 			params.onPhenotypeSelect(selectedSymptoms);
 
 			// Dismiss modal
@@ -140,17 +150,20 @@ class RefineSymptomsScreen extends Component {
 		  		Press the "Add selected symptoms" button upon
 		  		completing the selection.
 		  	</Text>
+
 		  	<ScrollView style={styles.listContainer}>
 				  <FlatList
 				  	data={this.state.symptomList}
 				  	renderItem={this.renderList}
     		  	keyExtractor={ (item, index) => {return index} } />
 				</ScrollView>
+
 			  <View style={styles.buttonContainer}>
 					<Button
-						onPress={this.onSymptomsSelectAll}
-						title='Select all symptoms' />
+						onPress={this.onSymptomsToggleAll}
+						title={this.state.selectAll ? 'Deselect all symptoms' : 'Select all symptoms'} />
 				</View>
+
 			  <View style={styles.buttonContainer}>
 					<Button
 						onPress={this.onSymptomsAdd}

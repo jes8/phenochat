@@ -27,7 +27,7 @@ class DescribeDiagnosesScreen extends Component {
 	static navigationOptions = ({navigation, screenProps}) => ({
 		title: 'Describe diagnoses',
 		headerRight: <Button
-			onPress={() => {navigation.state.params.dismiss()}}
+			onPress={() => { navigation.state.params.dismiss(); }}
   		title='Close'
 			color={screenProps.tintColor} />,
 		headerStyle: styles.header
@@ -61,15 +61,16 @@ class DescribeDiagnosesScreen extends Component {
 		// Clear search box
 		this._omniBox.clear();
 
+		// Clear list
+		this.setState({ diseaseList: [] });
+
 		const { navigate } = this.props.navigation;
 		const { params } = this.props.navigation.state;
-
-		// Record suspected diagnosis
-		params.onDiseaseSelect(item);
 
 		// Navigate to next screen
 		navigate('RefineSymptoms', {
 			selectedDisease: item,
+			onDiseaseSelect: params.onDiseaseSelect,
 			onPhenotypeSelect: params.onPhenotypeSelect
 		});
 	}
@@ -101,10 +102,12 @@ class DescribeDiagnosesScreen extends Component {
 		  	<Text>
 		  		Describe suspected diagnoses and select from their key symptoms
 		  	</Text>
+
 		  	<OmniBox
       		setRef={this.setOmniBoxRef}
       		placeholderText='Search for diseases'
       		onSearch={this.onSearch} />
+
 		  	<ScrollView
 		  		style={styles.listContainer}
       		ref={this.setScrollViewRef}>

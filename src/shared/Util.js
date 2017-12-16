@@ -12,7 +12,7 @@ class Util {
 	 */
 	static addListToList(list, inputList, keyAccessor = (item) => item.key) {
 		// Make a copy of the list
-		let newList = list.slice();
+		let newList = list.slice(0);
 
 		// Add given list
 		newList.push(...inputList);
@@ -31,7 +31,7 @@ class Util {
 	 */
 	static addItemToList(list, item, keyAccessor = (item) => item.key) {
 		// Make a copy of the list
-		let newList = list.slice();
+		let newList = list.slice(0);
 
 		// Add item only if it's unique
 		if(newList.findIndex((el) => {
@@ -54,7 +54,7 @@ class Util {
 		list, item, itemIndex, keyAccessor = (item) => item.key
 	) {
 		// Make a copy of the list
-		let newList = list.slice();
+		let newList = list.slice(0);
 
 		if (itemIndex === undefined) {
 			let toRemoveIndex = newList.findIndex((el) => {

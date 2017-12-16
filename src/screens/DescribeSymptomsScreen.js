@@ -59,24 +59,24 @@ class DescribeSymptomsScreen extends Component {
 
 	_onSymptomAdd(item, index) {
 		if (item.added === false) {
-			// Update local list
-			let newList = this.state.symptomList.slice();
-			newList.splice(index, 1);
-
-			let newlyAdded = {...this.state.added};
-			newlyAdded[item.hpo_id] = true;
-
-			this.setState({
-				symptomList: newList,
-				added: newlyAdded
-			})
+			// Clear search box
+			this._omniBox.clear();
 
 			// Add to overall list
 			const { params } = this.props.navigation.state;
 			params.onPhenotypeSelect(item);
 
-			// Clear search box
-			this._omniBox.clear();
+			// Update local list
+			let newList = this.state.symptomList.slice(0);
+			newList.splice(index, 1);
+
+			let newlyAdded = Object.assign({}, this.state.added);
+			newlyAdded[item.hpo_id] = true;
+
+			this.setState({
+				symptomList: newList,
+				added: newlyAdded
+			});
 		}
 	}
 
