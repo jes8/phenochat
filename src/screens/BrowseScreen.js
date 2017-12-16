@@ -12,6 +12,9 @@ import GenericListViewItem from '../shared/GenericListViewItem';
 
 import Disease from '../models/Disease';
 
+/**
+ * Screen for browsing disease information
+ */
 class BrowseScreen extends Component {
 	static navigationOptions = {
 		title: 'Browse diseases'

@@ -6,9 +6,11 @@ import DescribeScreen from '../src/screens/DescribeScreen';
 import DescribeSymptomsScreen from '../src/screens/DescribeSymptomsScreen';
 import DescribeDiagnosesScreen from '../src/screens/DescribeDiagnosesScreen';
 import RefineSymptomsScreen from '../src/screens/RefineSymptomsScreen';
+import EditDiagnosesScreen from '../src/screens/EditDiagnosesScreen';
+import EditSymptomsScreen from '../src/screens/EditSymptomsScreen';
 import SendScreen from '../src/screens/SendScreen';
 import BrowseScreen from '../src/screens/BrowseScreen';
-import DiseaseDetailScreen from '../src/screens/DiseaseDetailScreen';
+import BrowseDetailScreen from '../src/screens/BrowseDetailScreen';
 
 /**
  * Dismissable modal
@@ -68,7 +70,7 @@ export const DescribeOptionsStack = StackNavigator({
   },
   DescribeDiagnoses: {
     screen: DescribeDiagnosisStack,
-  }
+  },
 }, {
   headerMode: 'none',
   mode: 'modal',
@@ -84,6 +86,12 @@ export const DescribeStack = StackNavigator({
   Describe: {
     screen: DescribeOptionsStack,
   },
+  EditDiagnoses: {
+    screen: EditDiagnosesScreen,
+  },
+  EditSymptoms: {
+    screen: EditSymptomsScreen,
+  },
   Send: {
     screen: SendScreen,
   }
@@ -97,7 +105,7 @@ export const BrowseStack = StackNavigator({
     screen: BrowseScreen,
   },
   Detail: {
-    screen: DiseaseDetailScreen,
+    screen: BrowseDetailScreen,
   }
 });
 

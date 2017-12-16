@@ -34,10 +34,10 @@ class DescribeScreen extends Component {
 		this.onPhenotypeRemove = this._onPhenotypeRemove.bind(this);
 		this.onDiseaseAdd = this._onDiseaseAdd.bind(this);
 		this.onDiseaseRemove = this._onDiseaseRemove.bind(this);
-		this.renderPhenotypeList = this._renderPhenotypeList.bind(this);
-		this.renderDiseaseList = this._renderDiseaseList.bind(this);
 		this.onDescribeSymptoms = this._onDescribeSymptoms.bind(this);
 		this.onDescribeDiagnoses = this._onDescribeDiagnoses.bind(this);
+		this.onEditSymptoms = this._onEditSymptoms.bind(this);
+		this.onEditDiagnoses = this._onEditDiagnoses.bind(this);
 		this.onSend = this._onSend.bind(this);
 	}
 
@@ -102,6 +102,20 @@ class DescribeScreen extends Component {
 		});
 	}
 
+	_onEditSymptoms() {
+		this.props.navigation.navigate('EditSymptoms', {
+			phenotypeList: this.state.phenotypeList,
+			onPhenotypeRemove: this.onPhenotypeRemove
+		});
+	}
+
+	_onEditDiagnoses() {
+		this.props.navigation.navigate('EditDiagnoses', {
+			diseaseList: this.state.diseaseList,
+			onDiseaseRemove: this.onDiseaseRemove
+		});
+	}
+
 	_onSend() {
 		if (this.state.phenotypeList.length === 0) {
 			Alert.alert(
@@ -118,40 +132,11 @@ class DescribeScreen extends Component {
 		}
 	}
 
-	_renderPhenotypeList({item, index}) {
-		return(
-		  <GenericListViewItem
-		  	actionBtn={{
-		  		iconName: 'times',
-		  		color: '#E53935',
-		  		label: 'Remove'
-		  	}}
-		  	data={item}
-		  	dataIndex={index}
-		  	onPressButton={this.onPhenotypeRemove} />
-		)
-	}
-
-	_renderDiseaseList({item, index}) {
-		return(
-		  <GenericListViewItem
-		  	actionBtn={{
-		  		iconName: 'times',
-		  		color: '#E53935',
-		  		label: 'Remove'
-		  	}}
-		  	data={item}
-		  	dataIndex={index}
-		  	onPressButton={this.onDiseaseRemove} />
-		)
-	}
-
-
 	render() {
 		return (
 		  <View style={styles.container}>
 
-		  	<View style={styles.optionContainer}>
+		  	<View style={styles.topContainer}>
 			  	<Text style={styles.instruction}>
 			  		Select from the below options to describe phenotypes
 			  	</Text>
@@ -171,28 +156,30 @@ class DescribeScreen extends Component {
 				  </View>
 			  </View>
 
-			  <View style={styles.selectedContainer}>
-			  	<Text style={styles.instruction}>
-			  		Selected phenotypes
-			  	</Text>
+			  <View style={styles.bottomContainer}>
+			  	<View style={styles.selectedContainer}>
+					  <View style={styles.selectedRow}>
+					  	<Text style={styles.counter}>
+					  		Selected phenotypes: {this.state.phenotypeList.length}
+					  	</Text>
 
-			  	<ScrollView style={styles.listContainer}>
-					  <FlatList
-					  	data={this.state.phenotypeList}
-					  	renderItem={this.renderPhenotypeList}
-    		  		keyExtractor={ (item, index) => {return item.hpo_id} } />
-					</ScrollView>
+					  	<Button
+					  		onPress={this.onEditSymptoms}
+					  		title='Edit'
+					  		accessibilityLabel='Edit selected symptoms' />
+						</View>
 
-			  	<Text style={styles.instructionMid}>
-			  		Selected diagnoses
-			  	</Text>
+					  <View style={styles.selectedRow}>
+					  	<Text style={styles.counter}>
+					  		Selected diagnoses: {this.state.diseaseList.length}
+					  	</Text>
 
-			  	<ScrollView style={styles.listContainer}>
-					  <FlatList
-					  	data={this.state.diseaseList}
-					  	renderItem={this.renderDiseaseList}
-    		  		keyExtractor={ (item, index) => {return item.omim_id} } />
-					</ScrollView>
+					  	<Button
+					  		onPress={this.onEditDiagnoses}
+					  		title='Edit'
+					  		accessibilityLabel='Edit selected diagnoses' />
+						</View>
+					</View>
 
 				  <View style={styles.buttonContainer}>
 				  	<Button
@@ -214,31 +201,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  optionContainer: {
+  topContainer: {
   	width: '100%',
   	paddingBottom: 10,
   	borderBottomWidth: 2,
   	borderBottomColor: '#BDBDBD',
   },
-  selectedContainer: {
+  instruction: {
+  	marginBottom: 10,
+  },
+  bottomContainer: {
   	width: '100%',
   	paddingTop: 10,
   	flex: 1,
   },
-  instruction: {
-  	marginBottom: 10,
+  selectedContainer: {
+  	paddingTop: 5,
+  	paddingBottom: 10,
+  	marginBottom: 5,
+  	borderBottomWidth: 2,
+  	borderBottomColor: '#BDBDBD',
   },
-  instructionMid: {
-  	marginBottom: 10,
-  	marginTop: 10,
+  selectedRow: {
+  	paddingTop: 15,
+  	paddingBottom: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  counter: {
+  	fontSize: 20,
+  	fontWeight: 'bold',
   },
   buttonContainer: {
-  	marginTop: 5,
-  	marginBottom: 5,
-  	backgroundColor: '#FFFFFF',
-  },
-  listContainer: {
-  	flex: 1,
   	marginTop: 5,
   	marginBottom: 5,
   	backgroundColor: '#FFFFFF',

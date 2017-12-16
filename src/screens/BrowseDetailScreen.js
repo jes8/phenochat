@@ -16,7 +16,10 @@ import GenericListViewItem from '../shared/GenericListViewItem';
 
 import Phenotype from '../models/Phenotype';
 
-class DiseaseDetailScreen extends Component {
+/**
+ * Screen for displaying disease detail
+ */
+class BrowseDetailScreen extends Component {
 	static navigationOptions = ({navigation}) => ({
 		title: 'Disease information',
 	});
@@ -144,4 +147,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = DiseaseDetailScreen;
+module.exports = BrowseDetailScreen;

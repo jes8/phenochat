@@ -14,6 +14,9 @@ import GenericListViewItem from '../shared/GenericListViewItem';
 
 import Phenotype from '../models/Phenotype';
 
+/**
+ * Screen for selecting key symptoms of selected diagnosis
+ */
 class RefineSymptomsScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now
 	// https://github.com/react-community/react-navigation/issues/686

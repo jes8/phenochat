@@ -14,6 +14,9 @@ import GenericListViewItem from '../shared/GenericListViewItem';
 
 import Phenotype from '../models/Phenotype';
 
+/**
+ * Screen for describing individual symptoms
+ */
 class DescribeSymptomsScreen extends Component {
 	static navigationOptions = ({navigation, screenProps}) => ({
 		title: 'Describe symptoms',

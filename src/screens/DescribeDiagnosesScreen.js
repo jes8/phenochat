@@ -14,6 +14,9 @@ import GenericListViewItem from '../shared/GenericListViewItem';
 
 import Disease from '../models/Disease';
 
+/**
+ * Screen for describing diagnoses
+ */
 class DescribeDiagnosesScreen extends Component {
 	// For dismissing modal. Not an ideal solution but works for now
 	// https://github.com/react-community/react-navigation/issues/686
