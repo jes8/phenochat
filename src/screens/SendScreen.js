@@ -41,7 +41,7 @@ class SendScreen extends Component {
 		let text =
 			'##phenochat_description\n' +
 			'##phenotypes\n##format=hpo_id,hpo_name\n' +
-			phenotypeText.join('\n') + '\n'
+			phenotypeText.join('\n') + '\n' +
 			'##suspected_diagnoses\n##format=MIM_number,OMIM_name\n' +
 			diseaseText.join('\n') + '\n';
 
