@@ -11,20 +11,20 @@ This project is built using React Native.
 
 ### Screenshots
 
-Main screen
+#### Main screen
 ![PhenoChat main screen screenshot](screenshots/pc_main.png "PhenoChat main screen")
 
-Build phenotypic description by specifying individual phenotype terms.
+#### Build phenotypic description by specifying individual phenotype terms.
 ![PhenoChat describe phenotypes screenshot](screenshots/pc_desc_pheno.png "PhenoChat describe phenotypes screenshot")
 
-Build phenotypic description by specifying a disease and then selecting key phenotypic features of the disease.
+#### Build phenotypic description by specifying a disease and then selecting key phenotypic features of the disease.
 ![PhenoChat describe diseases screenshot 1](screenshots/pc_desc_disease_1.png "PhenoChat describe diseases screenshot")
 ![PhenoChat describe diseases screenshot 2](screenshots/pc_desc_disease_2.png "PhenoChat describe diseases screenshot")
 
-Send description by email or copy description to clipboard
+#### Send description by email or copy description to clipboard
 ![PhenoChat email or copy to clipboard screenshot](screenshots/pc_email_or_copy.png "PhenoChat email or copy to clipboard screenshot")
 
-Browse diseases
+#### Browse diseases
 ![PhenoChat browse diseases screenshot 1](screenshots/pc_browse_1.png "PhenoChat browse diseases screenshot")
 ![PhenoChat browse diseases screenshot 2](screenshots/pc_browse_2.png "PhenoChat browse diseases screenshot")
 
@@ -47,37 +47,38 @@ HP:0000930,Elevated imprint of the transverse
 
 ## Getting started
 
-0. Install prerequisites
+1. Install prerequisites
 
-Please follow the instructions provided under ["Prerequisites"](#prerequisites)
+	Please follow the instructions provided under ["Prerequisites"](#prerequisites)
 
-1. Clone the repository to your local machine
+2. Clone the repository to your local machine
 
-```
-git clone git@github.com:jes8/phenochat.git
-```
+	```
+	git clone git@github.com:jes8/phenochat.git
+	```
 
-2. Install dependencies
+3. Install dependencies
 
-```
-yarn install
-```
+	```
+	yarn install
+	```
 
-3. Start developing!
+4. Start developing!
 
-To run this project on devices/simulators, please follow the instructions provided under ["Testing"](#testing).
+	To run this project on devices/simulators, please follow the instructions provided under ["Testing"](#testing).
 
 
 ## Prerequisites
 
 This project requires:
-- React Native
-- Node.js
-- Xcode (macOS only)
-- Java SE Development Kit (JDK)
-- Android Studio
-- Node.js packages (rnpm and node-xcode)
-- Yarn
+
+	- React Native
+	- Node.js
+	- Xcode (macOS only)
+	- Java SE Development Kit (JDK)
+	- Android Studio
+	- Node.js packages (rnpm and node-xcode)
+	- Yarn
 
 Below explains how to install the prerequisites.
 
@@ -144,7 +145,7 @@ react-native run-ios --simulator="iPhone 6"
 
 ### iOS device
 
-Do so in Xcode but will need apple dev account (for more details, refer to https://facebook.github.io/react-native/docs/running-on-device.html)
+Do so in Xcode but will need apple dev account (for more details, refer to [React Native doc](https://facebook.github.io/react-native/docs/running-on-device.html))
 
 ### Android emulator
 
