@@ -11,7 +11,7 @@ An open-source phenotyping app for mobile devices
 ---
 
 ## About this project
-<a name="md-about-this-project"></a>
+<a id="md-about-this-project"></a>
 
 PhenoChat is an open-source phenotyping application for mobile devices. It helps users build phenotypic descriptions using medical terminologies provided by the Human Phenotype Ontology (HPO). Users can build the descriptions either by (a) specifying individual phenotype terms, or (b) specifying a disease and then selecting key phenotypic features of the disease. Upon completion, the descriptions can be sent by email or copied to clipboard for pasting in other messaging applications. The descriptions are formatted in a way that can be automatically parsed.
 
@@ -54,7 +54,7 @@ HP:0000930,Elevated imprint of the transverse
 
 
 ## Getting started
-<a name="md-getting-started"></a>
+<a id="md-getting-started"></a>
 
 1. Install prerequisites
 
@@ -78,7 +78,7 @@ HP:0000930,Elevated imprint of the transverse
 
 
 ## Prerequisites
-<a name="md-prerequisites"></a>
+<a id="md-prerequisites"></a>
 
 This project requires:
 
@@ -140,7 +140,7 @@ This project uses Yarn for managing dependencies. Please install Yarn by followi
 
 
 ## Testing
-<a name="md-testing"></a>
+<a id="md-testing"></a>
 
 ### iOS simulator
 
@@ -193,7 +193,7 @@ react-native run-android
 
 
 ## Resources used
-<a name="md-resources-used"></a>
+<a id="md-resources-used"></a>
 
 1. Human Phenotype Ontology (HPO) (for phenotype terms and synonyms) [link](https://hpo.jax.org/)
 
