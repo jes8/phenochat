@@ -1,9 +1,16 @@
 # PhenoChat
 
-Open-source phenotyping for mobile devices
+An open-source phenotyping app for mobile devices
 
+#### Table of contents
 
-## About this project
+* [About this project](#md-about-this-project)
+* [Getting started](#md-getting-started)
+* [Resources used](#md-resources-used)
+
+---
+
+## <a id="md-about-this-project"></a>About this project
 
 PhenoChat is an open-source phenotyping application for mobile devices. It helps users build phenotypic descriptions using medical terminologies provided by the Human Phenotype Ontology (HPO). Users can build the descriptions either by (a) specifying individual phenotype terms, or (b) specifying a disease and then selecting key phenotypic features of the disease. Upon completion, the descriptions can be sent by email or copied to clipboard for pasting in other messaging applications. The descriptions are formatted in a way that can be automatically parsed.
 
@@ -45,11 +52,11 @@ HP:0000930,Elevated imprint of the transverse
 ```
 
 
-## Getting started
+## <a id="md-getting-started"></a>Getting started
 
 1. Install prerequisites
 
-	Please follow the instructions provided under ["Prerequisites"](#prerequisites)
+	Please follow the instructions provided under ["Prerequisites"](#md-prerequisites)
 
 2. Clone the repository to your local machine
 
@@ -65,10 +72,10 @@ HP:0000930,Elevated imprint of the transverse
 
 4. Start developing!
 
-	To run this project on devices/simulators, please follow the instructions provided under ["Testing"](#testing).
+	To run this project on devices/simulators, please follow the instructions provided under ["Testing"](#md-testing).
 
 
-## Prerequisites
+## <a id="md-prerequisites"></a>Prerequisites
 
 This project requires:
 
@@ -129,7 +136,7 @@ npm -g install rnpm xcode
 This project uses Yarn for managing dependencies. Please install Yarn by following their [installation document](https://yarnpkg.com/lang/en/docs/install/#mac-stable).
 
 
-## Testing
+## <a id="md-testing"></a>Testing
 
 ### iOS simulator
 
@@ -181,7 +188,7 @@ react-native run-android
 ```
 
 
-## Resources used
+## <a id="md-resources-used"></a>Resources used
 
 1. Human Phenotype Ontology (HPO) (for phenotype terms and synonyms) [link](https://hpo.jax.org/)
 
